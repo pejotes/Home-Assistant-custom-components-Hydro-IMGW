@@ -64,7 +64,7 @@ class MeteoImgwSensor(Entity):
             "wilgotnosc_wzgledna": "rel_humidity",
             "suma_opadu": "rain_sum",
             "cisnienie": "pressure",
-            "stacja": "station"
+            "stacja": "name"
         }
         attributes = {}
         for name, json_path in attr_paths.items():
