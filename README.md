@@ -4,6 +4,7 @@
 [![Buy me a coffee][buy_me_a_coffee_shield]][buy_me_a_coffee]
 [![PayPal.Me][paypal_me_shield]][paypal_me]
 
+Fork of very nice https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW project, adjusted to fetch meteo public data from IMGW.
 
 [hacs_shield]: https://img.shields.io/static/v1.svg?label=HACS&message=Custom&style=popout&color=orange&labelColor=41bdf5&logo=HomeAssistantCommunityStore&logoColor=white
 [hacs]: https://hacs.xyz/docs/faq/custom_repositories
