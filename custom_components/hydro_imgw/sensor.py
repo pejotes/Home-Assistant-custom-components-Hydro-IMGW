@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL = timedelta(minutes=10)
 
-DEFAULT_NAME = 'Hydro IMGW'
+DEFAULT_NAME = 'Meteo IMGW'
 CONF_STATION_ID = "station_id"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -27,10 +27,10 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     name = config.get(CONF_NAME)
     uid = '{}_{}'.format(DEFAULT_NAME, station_id)
     entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid, hass=hass)
-    add_entities([HydroImgwSensor(entity_id, name, station_id)], True)
+    add_entities([MeteoImgwSensor(entity_id, name, station_id)], True)
 
 
-class HydroImgwSensor(Entity):
+class MeteoImgwSensor(Entity):
     def __init__(self, entity_id, name, station_id):
         self.entity_id = entity_id
         self._platform_name = name
@@ -50,26 +50,25 @@ class HydroImgwSensor(Entity):
     @property
     def state(self):
         if self._data is not None:
-            self._state = HydroImgwSensor.extractor(self._data, "status.currentState.value")
+            self._state = MeteoImgwSensor.extractor(self._data, "status.currentState.value")
         return self._state
 
     @property
     def extra_state_attributes(self):
         attr_paths = {
-            "current_date": "status.currentState.date",
+            "data_pomiaru": "status.currentState.date",
             "previous_date": "status.previousState.date",
-            "alarm_value": "alarmValue",
-            "warning_value": "warningValue",
-            "high_value": "highValue",
-            "low_value": "lowValue",
-            "trend": "trend",
-            "name": "name",
-            "level": "state",
-            "river": "status.river"
+            "temperatura": "temperature",
+            "predkosc_wiatru": "wind_speed",
+            "kierunek_wiatru": "wind_direction",
+            "wilgotnosc_wzgledna": "rel_humidity",
+            "suma_opadu": "rain_sum",
+            "cisnienie": "pressure",
+            "stacja": "station"
         }
         attributes = {}
         for name, json_path in attr_paths.items():
-            attributes[name] = HydroImgwSensor.extractor(self._data, json_path)
+            attributes[name] = MeteoImgwSensor.extractor(self._data, json_path)
         return attributes
 
     @property
@@ -77,9 +76,9 @@ class HydroImgwSensor(Entity):
         return LENGTH_CENTIMETERS
 
     def update(self):
-        address = 'https://hydro.imgw.pl/api/station/hydro/?id={}'.format(self._station_id)
+        address = 'https://danepubliczne.imgw.pl/api/data/synop/id/{}'.format(self._station_id)
         headers = {
-            "host": "hydro.imgw.pl"
+            "host": "danepubliczne.imgw.pl"
         }
         request = requests.get(address, headers=headers)
         if request.status_code == 200 and request.content.__len__() > 0:
