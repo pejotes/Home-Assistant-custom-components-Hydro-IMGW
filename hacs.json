@@ -1,8 +1,8 @@
 {
-  "name": "Hydro IMGW",
+  "name": "Meteo IMGW",
   "render_readme": true,
-  "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW",
-  "issue_tracker": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/issues",
+  "documentation": "https://github.com/pejotes/Home-Assistant-custom-components-Meteo-IMGW",
+  "issue_tracker": "https://github.com/pejotes/Home-Assistant-custom-components-Meteo-IMGW/issues",
   "zip_release": true,
-  "filename": "hydro_imgw.zip"
+  "filename": "meteo_imgw.zip"
 }
